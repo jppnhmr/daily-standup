@@ -1,4 +1,3 @@
-import schedule
 import time
 from datetime import datetime, timedelta
 import json
@@ -97,15 +96,3 @@ def run():
 if __name__ == "__main__":
     print("### DAILY STANDUP ###")
     run()
-
-    schedule.every().day.at("09:00").do(run)
-
-    print("\nScheduler active. Will run daily at 09:00.")
-    print("Press Ctrl+C to stop.\n")
-
-    try:
-        while True:
-            schedule.run_pending()
-            time.sleep(60)
-    except KeyboardInterrupt:
-        print("\nStopped.")
