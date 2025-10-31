@@ -2,9 +2,10 @@ import time
 from datetime import datetime, timedelta
 import json
 import os
+from pathlib import Path
 
 SAVE_NAME = "standup_data"
-SAVE_FILE = SAVE_NAME+".json"
+SAVE_FILE = Path(SAVE_NAME+".json")
 
 def standup(date, streak):
     print(f"### Daily Standup {date} ###")
@@ -25,11 +26,12 @@ def standup(date, streak):
         print("See you tomorrow.")
 
 def save_standup(date, today, tomorrow, blockers, streak):
-    try:
+
+    if not SAVE_FILE.exists() or SAVE_FILE.stat().st_size == 0:
+        data = []
+    else:
         with open(SAVE_FILE, "r") as f:
             data = json.load(f)
-    except FileNotFoundError:
-        data = []
 
     standup = {
         "date": date.strftime("%d-%m-%Y"),
@@ -46,8 +48,10 @@ def save_standup(date, today, tomorrow, blockers, streak):
     print(f"saved to {os.path.abspath(SAVE_FILE)}")
 
 def load_previous_standup() -> dict:
-
-    try:
+   
+    if not SAVE_FILE.exists() or SAVE_FILE.stat().st_size == 0:
+        return {"date": str_to_date("01-01-2000"), "streak": 0}
+    else:
         with open(SAVE_FILE, "r") as f:
             data = json.load(f)
             # Get most recent entry
@@ -58,9 +62,6 @@ def load_previous_standup() -> dict:
             # convert str date to date object
             data["date"] = str_to_date(data["date"])
             return data
-
-    except FileNotFoundError:
-        return {"date": str_to_date("01-01-2000"), "streak": 0}
 
 def str_to_date(date_str):
     return datetime.strptime(date_str, "%d-%m-%Y").date()

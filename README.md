@@ -8,8 +8,6 @@ Keeps track of 'streak', number of days in a row you've attended the standup.
 ## Installation
 download daily_standup.py
 
-```pip install schedule```
-
 ### Create Scheduled Task
 #### On Windows
 Edit run_standup.bat with the path to project directory and path to python.exe
