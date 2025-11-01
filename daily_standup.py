@@ -86,7 +86,8 @@ def run():
         return
 
     yesterday = today - timedelta(days=1)
-    if (prev_date.day == yesterday):
+
+    if (prev_date == yesterday):
         streak += 1
     else:
         streak = 1
