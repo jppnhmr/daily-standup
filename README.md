@@ -26,3 +26,5 @@ Finish
 
 ## Usage
 ```python daily_standup.py```
+to read the standups:
+```python read_standups.py```
